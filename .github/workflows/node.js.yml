@@ -24,17 +24,16 @@ jobs:
         node-version: '22.x'
         cache: 'npm'
         
-    - run: npm ci
+    - run: npm install  
     - run: npm run build --if-present
-    - run: npm test
+    - run: npx vitest run --coverage
     
     - name: Report Coverage
       uses: davelosert/vitest-coverage-report-action@v2
 
   package-and-publish:
-    needs: build 
+    needs: build
     runs-on: ubuntu-latest
-    
     permissions:
       contents: read
       packages: write
@@ -51,7 +50,7 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }} 
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
