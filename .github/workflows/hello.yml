@@ -1,0 +1,31 @@
+name: Hello World Training Workflow
+
+on:
+  workflow_dispatch:
+  issues:
+    types: [opened, edited]
+
+env:
+  MY_ENV: "Це моя власна змінна"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Greet the User
+        run: echo "Hello World!"
+        
+      - name: List directory before checkout
+        run: ls -l
+        
+      - name: Checkout code
+        uses: actions/checkout@v5
+        
+      - name: List directory after checkout
+        run: ls -l
+        
+      - name: Run a multi-line script
+        run: |
+          echo "Значення моєї змінної: $MY_ENV"
+          echo "Цей workflow запустив користувач: $GITHUB_ACTOR"
